@@ -7,7 +7,6 @@ import { FaSearchLocation } from "react-icons/fa";
 
 function App() {
   // Splash screen
-  const [splash, setSplash] = useState(false);
   const [onSplash, setOnSplash] = useState("");
   const [offSplash, offOnSplash] = useState("hidden");
   // Latitude and longitude
@@ -16,7 +15,8 @@ function App() {
   // Data
   const [data, setData] = useState([]);
   // background
-  const [bg, setBg] = useState("Clouds");
+  const [bg, setBg] = useState("pocasNubes");
+  const [classBg, setClassBg] = useState("bg-[url('/img/Clouds.jpg')]");
   // Units of measurement
   const [measurement, setMeasurement] = useState("imperial")
   const [unitMeasurement, setUnitMeasurement] = useState(true);
@@ -71,7 +71,12 @@ function App() {
 
   useEffect(()=>{
     setBg(data.data?.weather[0].main);
+    console.log(data.data?.weather[0].main);
   },[data]);
+
+  useEffect(()=>{
+    setClassBg("bg-[url('/img/" +  bg  + ".jpg')]");
+  },[bg]);
 
   function switchSplash(load) {
     if (load) {
@@ -111,7 +116,7 @@ function App() {
         <RiMistFill className='w-full md:w-1/12 h-1/5 text-white animate-pulse duration-[7000ms] delay-[7000ms]'/>
       </div>
       <div className='w-full h-screen bg-slate-700 transition-all duration-[2000ms] ease-linear font-Montserrat'>
-        <div className={"w-full h-full bg-[url('/img/" +  bg  + ".jpg')] bg-center bg-cover flex flex-col items-center transition-all duration-[2000ms] ease-linear " + offSplash +""}>
+        <div className={"w-full h-full " + classBg + " bg-center bg-cover flex flex-col items-center transition-all duration-[2000ms] ease-linear " + offSplash +""}>
           <div className='w-full h-1/4 flex justify-center'>
             <div className='w-11/12 flex flex-col justify-center items-center'>
               <h1 className='w-full font-semibold text-blue-500 text-3xl text-left'> Weather app </h1>
